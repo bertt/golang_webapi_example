@@ -33,7 +33,7 @@ func Handlers() *mux.Router {
 }
 func main(){
 	var userBob = User{0, "Bob",100}
-	res = append(userStore,userBob)
+	userStore = append(userStore,userBob)
 	fmt.Println("Server starting")
 	http.ListenAndServe(":8000", Handlers())
 }
