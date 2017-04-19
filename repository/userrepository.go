@@ -1,7 +1,7 @@
 package repository
 
 import(
-	"github.com/bertt/golang_webapi_example/models"
+	"../models"
 )
 
 var users = []models.User{}

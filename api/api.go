@@ -5,8 +5,8 @@ import (
 	"io/ioutil"
 	"github.com/gorilla/mux"
 	"net/http"
-	"github.com/bertt/golang_webapi_example/repository"
-	"github.com/bertt/golang_webapi_example/models"
+	"../repository"
+	"../models"
 )
 
 
