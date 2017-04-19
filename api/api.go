@@ -3,12 +3,13 @@ package api
 import (
 	"encoding/json"
 	"io/ioutil"
-	"github.com/gorilla/mux"
 	"net/http"
-	"../repository"
-	"../models"
-)
 
+	"github.com/bertt/golang_webapi_example/repository"
+
+	"github.com/bertt/golang_webapi_example/models"
+	"github.com/gorilla/mux"
+)
 
 func listUsersHandler(w http.ResponseWriter, r *http.Request) {
 	users := repository.GetUsers()

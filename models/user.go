@@ -10,4 +10,3 @@ type UserParams struct {
 	Username     string `json:"username"`
 	MoneyBalance uint32 `json:"balance"`
 }
-

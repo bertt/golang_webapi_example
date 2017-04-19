@@ -1,13 +1,13 @@
 package main
 
 import (
-	"net/http"
 	"fmt"
-	"./api"
+	"net/http"
+
+	"github.com/bertt/golang_webapi_example/api"
 )
 
-
-func main(){
+func main() {
 	fmt.Println("Server starting")
 	http.ListenAndServe(":8000", api.Handlers())
 }

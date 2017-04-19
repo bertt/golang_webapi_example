@@ -1,13 +1,14 @@
 package api
 
 import (
-	"testing"
-	"strings"
-	"net/http/httptest"
-	"io"
 	"fmt"
+	"io"
 	"net/http"
+	"net/http/httptest"
+	"strings"
+	"testing"
 )
+
 var (
 	server   *httptest.Server
 	reader   io.Reader
@@ -19,7 +20,6 @@ func init() {
 
 	usersUrl = fmt.Sprintf("%s/users", server.URL)
 }
-
 
 func TestListUsers(t *testing.T) {
 	reader = strings.NewReader("")
