@@ -5,40 +5,27 @@ import (
 	"io/ioutil"
 	"github.com/gorilla/mux"
 	"net/http"
+	"github.com/bertt/golang_webapi_example/repository"
+	"github.com/bertt/golang_webapi_example/models"
 )
 
-type User struct {
-Id           uint32 `json:"id"`
-Username     string `json:"username"`
-MoneyBalance uint32 `json:"balance"`
-}
-
-type UserParams struct {
-	Username     string `json:"username"`
-	MoneyBalance uint32 `json:"balance"`
-}
-
-var UserStore = []User{}
-var userIdCounter uint32 = 0
 
 func listUsersHandler(w http.ResponseWriter, r *http.Request) {
-	users, _ := json.Marshal(UserStore)
-	w.Write(users)
+	users := repository.GetUsers()
+	usersjson, _ := json.Marshal(users)
+	w.Write(usersjson)
 }
 
 func createUserHandler(w http.ResponseWriter, r *http.Request) {
-	p := UserParams{}
+	p := models.UserParams{}
 	body, _ := ioutil.ReadAll(r.Body)
 	json.Unmarshal(body, &p)
-	u := User{
-		Id:           userIdCounter,
+	user := models.User{
 		Username:     p.Username,
 		MoneyBalance: p.MoneyBalance,
 	}
+	repository.AddUser(user)
 
-	UserStore = append(UserStore, u)
-
-	userIdCounter += 1
 	w.WriteHeader(http.StatusCreated)
 }
 
