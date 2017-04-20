@@ -9,16 +9,20 @@ import (
 
 	"github.com/bertt/golang_webapi_example/models"
 	"github.com/gorilla/mux"
+	"fmt"
 )
 
 func listUsersHandler(w http.ResponseWriter, r *http.Request) {
 	var repos = repository.UserRepository{}
+	var newuser = models.User{1,"Bert", 500}
+	repos.AddUser(newuser)
 	users := repos.GetUsers()
 	usersjson, _ := json.Marshal(users)
 	w.Write(usersjson)
 }
 
 func createUserHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Create user")
 	p := models.UserParams{}
 	body, _ := ioutil.ReadAll(r.Body)
 	json.Unmarshal(body, &p)
@@ -32,9 +36,17 @@ func createUserHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusCreated)
 }
 
+func getXfs(w http.ResponseWriter, r *http.Request) {
+	externalUri := r.Header.Get("X-Forwarded-For")
+	bytes := []byte("xfs: " + externalUri)
+	w.Write(bytes)
+}
+
 func Handlers() *mux.Router {
 	r := mux.NewRouter()
 	r.HandleFunc("/users", listUsersHandler).Methods("GET")
+	r.HandleFunc("/xfs", getXfs).Methods("GET")
+
 	r.HandleFunc("/users", createUserHandler).Methods("POST")
 	return r
 }
