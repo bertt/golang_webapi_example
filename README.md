@@ -2,6 +2,29 @@
 
 Example for building a testable Golang Web API
 
+Used components: Mux router, MongoDB database, Docker
+
+Install:
+
+```
+glide install
+
+```
+
+Startup database:
+
+```
+docker run -p 27017:27017 -d mongo
+
+```
+
+Startup server:
+
+```
+go run main.go
+
+```
+
 API has two requests:
 
 - http get :8000/users
@@ -16,7 +39,6 @@ gocov test | gocov report
 
 todo:
 
-- use database layer (postgres?)
 
 - research virtual servers
 

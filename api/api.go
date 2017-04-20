@@ -14,8 +14,6 @@ import (
 
 func listUsersHandler(w http.ResponseWriter, r *http.Request) {
 	var repos = repository.UserRepository{}
-	var newuser = models.User{1,"Bert", 500}
-	repos.AddUser(newuser)
 	users := repos.GetUsers()
 	usersjson, _ := json.Marshal(users)
 	w.Write(usersjson)
@@ -36,6 +34,7 @@ func createUserHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusCreated)
 }
 
+// getXfs() testing the X-Forwarded-For header
 func getXfs(w http.ResponseWriter, r *http.Request) {
 	externalUri := r.Header.Get("X-Forwarded-For")
 	bytes := []byte("xfs: " + externalUri)
