@@ -12,7 +12,8 @@ import (
 )
 
 func listUsersHandler(w http.ResponseWriter, r *http.Request) {
-	users := repository.GetUsers()
+	var repos = repository.UserRepository{}
+	users := repos.GetUsers()
 	usersjson, _ := json.Marshal(users)
 	w.Write(usersjson)
 }
@@ -25,7 +26,8 @@ func createUserHandler(w http.ResponseWriter, r *http.Request) {
 		Username:     p.Username,
 		MoneyBalance: p.MoneyBalance,
 	}
-	repository.AddUser(user)
+	var repos = repository.UserRepository{}
+	repos.AddUser(user)
 
 	w.WriteHeader(http.StatusCreated)
 }
