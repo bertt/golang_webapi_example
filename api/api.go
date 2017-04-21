@@ -10,17 +10,51 @@ import (
 	"github.com/bertt/golang_webapi_example/models"
 	"github.com/gorilla/mux"
 	"fmt"
+	"time"
 )
 
+var IndentJSON = true
+
+func StartTimer(name string) func() {
+	var t = time.Now()
+	fmt.Println("Request started: ", name)
+	return func() {
+		var elapsed = time.Now().Sub(t)
+		fmt.Println("Request duration: ", elapsed)
+	}
+
+}
+
+
 func listUsersHandler(w http.ResponseWriter, r *http.Request) {
+	var stop = StartTimer("List users")
+	defer stop()
 	var repos = repository.UserRepository{}
 	users := repos.GetUsers()
-	usersjson, _ := json.Marshal(users)
-	w.Write(usersjson)
+	res, _ := JSONMarshal(users)
+	_, err := w.Write(res)
+	if(err!=nil){
+		panic("hola")
+	}
+}
+
+
+//JSONMarshal converts the data and converts special characters such as &
+func JSONMarshal(data interface{}) ([]byte, error) {
+	var b []byte
+	var err error
+
+	if IndentJSON {
+		b, err = json.MarshalIndent(data, "", "   ")
+	} else {
+		b, err = json.Marshal(data)
+	}
+	return b, err
 }
 
 func createUserHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("Create user")
+	var stop = StartTimer("Create user")
+	defer stop()
 	p := models.UserParams{}
 	body, _ := ioutil.ReadAll(r.Body)
 	json.Unmarshal(body, &p)

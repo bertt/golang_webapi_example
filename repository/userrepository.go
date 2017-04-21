@@ -8,7 +8,7 @@ import (
 var dbserver = "localhost"
 
 // GetUsers get the users from repos
-func (r UserRepository) GetUsers() ([]models.User) {
+func (r *UserRepository) GetUsers() ([]models.User) {
 	session, err := mgo.Dial(dbserver)
 	if err != nil {
 		panic(err)
@@ -22,7 +22,7 @@ func (r UserRepository) GetUsers() ([]models.User) {
 }
 
 // AddUser adds a user to repos
-func (r UserRepository) AddUser(user models.User){
+func (r *UserRepository) AddUser(user models.User){
 	session, err := mgo.Dial(dbserver)
 	if err != nil {
 		panic(err)

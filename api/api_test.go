@@ -7,6 +7,7 @@ import (
 	"net/http/httptest"
 	"strings"
 	"testing"
+	// "github.com/stretchr/testify/assert"
 )
 
 var (
@@ -19,6 +20,11 @@ func init() {
 	server = httptest.NewServer(Handlers())
 
 	usersUrl = fmt.Sprintf("%s/users", server.URL)
+}
+
+func RouterTest(t *testing.T){
+	//var h = Handlers()
+	//assert.True(t, h.!=nil)
 }
 
 func TestListUsers(t *testing.T) {
