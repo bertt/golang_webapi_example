@@ -29,7 +29,19 @@ API has two requests:
 
 - http get :8000/users
 
+sample:
+
+```
+$ curl http://localhost:8000/users
+```
+
 - http post :8000/users, body must have a user
+
+sample:
+
+```
+$ curl -H "Content-Type: application/json" -X POST -d '{"username":"bert","balance":11}' http://localhost:8000/users
+```
 
 Test coverage with:
 
